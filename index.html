@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contractor Desk · VV Automate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Anek+Bangla:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17130E; --ink2:#1F1A13; --ink3:#2A241B; --line:#3A3226;
+  --cream:#FFFAF0; --mute:#B5AB98; --dim:#8A806E;
+  --y:#FFC21A; --y2:#FFD866; --ok:#4ADE80; --warn:#FFB020; --bad:#FF6B5E; --blue:#6FB7FF;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+.bn{font-family:"Anek Bangla","Space Grotesk",sans-serif}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--y);color:var(--ink);font-weight:700;padding:14px 26px;border-radius:999px;transition:transform .2s,box-shadow .2s;box-shadow:0 0 0 0 rgba(255,194,26,.5)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 40px -8px rgba(255,194,26,.6)}
+.btn.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.btn.sm{padding:9px 16px;font-size:14px}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+.tag.y{border-color:rgba(255,194,26,.5);color:var(--y)}
+.tag.ok{border-color:rgba(74,222,128,.4);color:var(--ok)}
+.tag.warn{border-color:rgba(255,176,32,.5);color:var(--warn)}
+.tag.bad{border-color:rgba(255,107,94,.5);color:var(--bad)}
+
+/* ---------- landing ---------- */
+#landing{position:relative}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:rgba(23,19,14,.75);backdrop-filter:blur(14px);border-bottom:1px solid rgba(58,50,38,.6)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
+.mark{width:34px;height:34px;border-radius:10px;background:var(--y);display:grid;place-items:center;color:var(--ink);font-weight:700}
+.brand small{display:block;font-weight:400;font-size:11px;color:var(--mute);font-family:var(--mono);letter-spacing:.06em}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;padding:120px 6vw 60px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(700px 500px at 78% 45%,rgba(255,194,26,.13),transparent 65%),
+  linear-gradient(rgba(58,50,38,.35) 1px,transparent 1px) 0 0/100% 56px,
+  linear-gradient(90deg,rgba(58,50,38,.35) 1px,transparent 1px) 0 0/56px 100%;
+  mask-image:radial-gradient(ellipse at 60% 50%,#000 30%,transparent 80%);pointer-events:none}
+.hero>*{position:relative}
+h1{font-size:clamp(42px,6vw,84px);line-height:1.0;letter-spacing:-.03em;font-weight:700}
+h1 em{font-style:normal;color:var(--y)}
+.lede{font-size:clamp(17px,1.5vw,21px);color:var(--mute);max-width:560px;margin:26px 0 34px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.for{margin-top:40px;display:flex;gap:10px;flex-wrap:wrap}
+
+.orbit{position:relative;width:min(560px,90vw);aspect-ratio:1;margin:auto}
+.ring{position:absolute;inset:0;border:1px dashed rgba(255,194,26,.25);border-radius:50%}
+.ring.r2{inset:19%;border-color:rgba(255,250,240,.12)}
+.core{position:absolute;inset:36%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE08A,var(--y) 55%,#C98F00);display:grid;place-items:center;text-align:center;color:var(--ink);font-weight:700;font-size:clamp(12px,1.4vw,17px);line-height:1.15;box-shadow:0 0 90px 10px rgba(255,194,26,.35);animation:breathe 3.5s ease-in-out infinite}
+.core small{display:block;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.08em;margin-top:4px}
+@keyframes breathe{50%{box-shadow:0 0 130px 26px rgba(255,194,26,.5)}}
+.spin{position:absolute;inset:0;animation:spin 60s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.node{position:absolute;top:50%;left:50%;width:0;height:0}
+.node>div{position:absolute;transform:translate(-50%,-50%);animation:spin 60s linear infinite reverse;background:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:9px 13px;white-space:nowrap;font-size:13px;font-weight:600;display:flex;gap:8px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(74,222,128,.7);animation:pulse 2s infinite;flex:none}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+
+section.band{padding:100px 6vw;border-top:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--y);margin-bottom:14px}
+h2{font-size:clamp(30px,3.6vw,52px);line-height:1.05;letter-spacing:-.02em;max-width:820px}
+.sub{color:var(--mute);max-width:640px;margin-top:16px;font-size:18px}
+.agents{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px}
+.agent{background:var(--ink2);border:1px solid var(--line);border-radius:20px;padding:24px;transition:.25s;position:relative;overflow:hidden}
+.agent:hover{border-color:var(--y);transform:translateY(-4px)}
+.agent .ic{width:46px;height:46px;border-radius:13px;background:rgba(255,194,26,.12);display:grid;place-items:center;font-size:22px;margin-bottom:16px}
+.agent h3{font-size:19px;margin-bottom:6px}
+.agent p{color:var(--mute);font-size:15px}
+.agent.chief{background:linear-gradient(135deg,#3A2C05,var(--ink2) 70%);border-color:rgba(255,194,26,.5);grid-column:1/-1}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:48px}
+.step{border-left:2px solid var(--y);padding:4px 0 4px 22px}
+.step b{font-family:var(--mono);color:var(--y);font-size:13px}
+.step h3{font-size:21px;margin:6px 0}
+.step p{color:var(--mute)}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:48px}
+.pcard{background:var(--ink2);border:1px solid var(--line);border-radius:20px;padding:28px}
+.pcard h3{font-size:22px;margin:10px 0 8px}
+.pcard p{color:var(--mute);font-size:15px}
+.pcard.hot{border-color:var(--y)}
+footer{padding:36px 6vw;border-top:1px solid var(--line);color:var(--dim);font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ---------- app ---------- */
+#app{display:none;height:100vh;grid-template-columns:250px 1fr}
+body.inapp #landing{display:none}
+body.inapp #app{display:grid}
+aside{background:#120F0A;border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:3px;overflow:auto}
+aside .brand{padding:6px 10px 18px;font-size:16px}
+.navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--mute);font-size:14.5px;font-weight:500;text-align:left;width:100%}
+.navi:hover{background:var(--ink2);color:var(--cream)}
+.navi.on{background:rgba(255,194,26,.13);color:var(--y)}
+.navi .dot{margin-left:auto}
+.navi i{font-style:normal;width:20px;text-align:center}
+aside .sep{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim);padding:16px 12px 6px;text-transform:uppercase}
+aside .back{margin-top:auto;font-size:13px;color:var(--dim);padding:12px}
+main{overflow:auto;padding:26px 34px 60px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.top h2{font-size:30px}
+.top p{color:var(--mute);margin-top:4px;font-size:15px}
+.card{background:var(--ink2);border:1px solid var(--line);border-radius:18px;padding:22px}
+.card h4{font-size:13px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;font-weight:500}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1.4fr 1fr}.g2e{grid-template-columns:1fr 1fr}
+.kpi b{display:block;font-size:34px;letter-spacing:-.02em;line-height:1.1}
+.kpi span{color:var(--mute);font-size:14px}
+.kpi.y b{color:var(--y)}.kpi.bad b{color:var(--bad)}.kpi.warn b{color:var(--warn)}
+.brief{background:linear-gradient(135deg,#3A2C05,var(--ink2) 60%);border-color:rgba(255,194,26,.45)}
+.brief .who{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.av{width:42px;height:42px;border-radius:50%;background:var(--y);color:var(--ink);display:grid;place-items:center;font-weight:700}
+.brief p{font-size:18px;line-height:1.55;min-height:140px}
+.brief p b{color:var(--y)}
+.caret::after{content:"▍";color:var(--y);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.feed{display:flex;flex-direction:column;gap:10px;max-height:330px;overflow:hidden}
+.fi{display:flex;gap:12px;align-items:flex-start;font-size:14px;animation:slide .5s ease}
+.fi time{font-family:var(--mono);font-size:11px;color:var(--dim);flex:none;width:44px;padding-top:2px}
+.fi b{color:var(--y);font-weight:600}
+@keyframes slide{from{opacity:0;transform:translateY(-12px)}}
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.st{background:var(--ink3);border-radius:13px;padding:12px 14px;font-size:13.5px;cursor:pointer;border:1px solid transparent;transition:.2s}
+.st:hover{border-color:var(--y)}
+.st b{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:3px}
+.st span{color:var(--mute)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:13px 10px;border-bottom:1px solid rgba(58,50,38,.55);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td small{display:block;color:var(--dim);font-family:var(--mono);font-size:11px}
+.bar{height:7px;border-radius:9px;background:var(--ink3);overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--y);border-radius:9px;width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.r{text-align:right}
+.phone{width:290px;border-radius:34px;border:8px solid #000;background:#0B141A;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);margin:auto}
+.phone .hd{background:#1F2C33;padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600}
+.phone .hd small{display:block;font-weight:400;color:#8696A0;font-size:11px}
+.phone .bd{padding:14px;min-height:330px;display:flex;flex-direction:column;gap:8px;background:#0B141A}
+.msg{background:#1F2C33;border-radius:10px 10px 10px 2px;padding:8px 11px;font-size:13px;max-width:92%;line-height:1.45;animation:slide .4s ease}
+.msg.me{align-self:flex-end;background:#005C4B;border-radius:10px 10px 2px 10px}
+.msg b{color:#FFD866}
+.drop{border:2px dashed var(--line);border-radius:18px;padding:44px 20px;text-align:center;transition:.2s}
+.drop:hover{border-color:var(--y);background:rgba(255,194,26,.04)}
+.drop .big{font-size:40px;margin-bottom:8px}
+.prog{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.pl{display:flex;align-items:center;gap:12px;color:var(--dim);font-size:15px;transition:.3s}
+.pl.run{color:var(--cream)}.pl.done{color:var(--ok)}
+.pl .sp{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);flex:none}
+.pl.run .sp{border-color:var(--y);border-top-color:transparent;animation:spin .7s linear infinite}
+.pl.done .sp{border-color:var(--ok);background:var(--ok)}
+.scan{height:4px;background:var(--ink3);border-radius:9px;overflow:hidden;margin-top:18px}
+.scan i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--y),#FFE08A)}
+.score{display:flex;gap:26px;align-items:center}
+.ringsvg{width:150px;height:150px;flex:none}
+.ringsvg circle{fill:none;stroke-width:12;stroke-linecap:round}
+.ringsvg .bg{stroke:var(--ink3)}
+.ringsvg .fg{stroke:var(--y);stroke-dasharray:408;stroke-dashoffset:408;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}
+.verdict{font-size:30px;font-weight:700;color:var(--y);letter-spacing:-.01em}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.fact{background:var(--ink3);border-radius:13px;padding:13px 15px}
+.fact span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.fact b{font-size:18px}
+.chk{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(58,50,38,.55);font-size:14.5px}
+.chk:last-child{border:0}
+.chk i{font-style:normal;flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--ink)}
+.chk.ok i{background:var(--ok)}.chk.warn i{background:var(--warn)}
+.chk small{display:block;color:var(--mute);font-size:13px}
+.reveal{animation:slide .6s ease both}
+.letter{background:#FFFDF7;color:#1b1b1b;border-radius:10px;padding:34px 38px;font-family:Georgia,"Times New Roman",serif;font-size:14.5px;line-height:1.65;white-space:pre-wrap;min-height:420px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pick button{padding:9px 16px;border-radius:999px;border:1px solid var(--line);font-size:14px;color:var(--mute)}
+.pick button.on{background:var(--y);color:var(--ink);border-color:var(--y);font-weight:600}
+.voice{display:flex;gap:12px;align-items:center;background:#005C4B;border-radius:14px;padding:12px 16px;max-width:380px}
+.wave{display:flex;gap:3px;align-items:center;height:28px;flex:1}
+.wave i{width:3px;background:#B6E3D8;border-radius:3px;animation:wv 1s ease-in-out infinite}
+@keyframes wv{50%{transform:scaleY(.35)}}
+.note{font-size:12.5px;color:var(--dim);margin-top:14px;font-family:var(--mono)}
+.demo-flag{position:fixed;bottom:14px;right:16px;z-index:60;background:rgba(18,15,10,.9);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.06em}
+.range{position:relative;height:46px;margin:26px 0 8px}
+.range .track{position:absolute;top:20px;left:0;right:0;height:6px;border-radius:9px;background:var(--ink3)}
+.range .band{position:absolute;top:20px;height:6px;border-radius:9px;background:var(--y);left:0;width:0;transition:all 1.4s cubic-bezier(.2,.8,.2,1)}
+.range .pin{position:absolute;top:0;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--mute);text-align:center}
+.range .pin::after{content:"";display:block;width:2px;height:26px;background:var(--mute);margin:3px auto 0}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;padding-top:110px}
+  #app{grid-template-columns:1fr;height:auto}
+  aside{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  aside .brand,aside .sep,aside .back{display:none}
+  .navi{white-space:nowrap;width:auto}.navi .dot{display:none}
+  main{padding:20px 16px 70px}
+  .g4,.g3,.g2,.g2e,.facts,.status{grid-template-columns:1fr 1fr}
+  .g2,.g2e{grid-template-columns:1fr}
+  .score{flex-direction:column;align-items:flex-start}
+  .nav{padding:12px 16px}
+  table{font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================= LANDING ======================= -->
+<div id="landing">
+  <div class="nav">
+    <div class="brand"><div class="mark">CD</div><div>Contractor Desk<small>BY VV AUTOMATE</small></div></div>
+    <button class="btn sm" onclick="enter()">Open live demo →</button>
+  </div>
+
+  <header class="hero">
+    <div>
+      <span class="tag y">For building &amp; road contractors</span>
+      <h1 style="margin-top:22px">Your back office that <em>never sleeps.</em></h1>
+      <p class="lede">Nine AI officers watch tenders, read the 200-page documents, chase stuck bills, keep your papers ready and write your letters. One Chief of Staff reports to you every morning on WhatsApp.</p>
+      <div class="cta">
+        <button class="btn" onclick="enter()">See it working →</button>
+        <a class="btn ghost" href="#team">Meet the team</a>
+      </div>
+      <div class="for">
+        <span class="tag">CPWD</span><span class="tag">State PWD</span><span class="tag">CPPP · GeM</span><span class="tag">Buildings</span><span class="tag">Roads</span>
+      </div>
+    </div>
+    <div class="orbit" id="orbit">
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="spin" id="spin"></div>
+      <div class="core"><div>Chief<br>of Staff<small>ALWAYS ON</small></div></div>
+    </div>
+  </header>
+
+  <section class="band" id="team">
+    <div class="kicker">The team</div>
+    <h2>Each officer has one job. The Chief of Staff watches them all.</h2>
+    <p class="sub">You keep making the decisions. They do the reading, tracking, reminding and drafting.</p>
+    <div class="agents" id="agentCards"></div>
+  </section>
+
+  <section class="band">
+    <div class="kicker">How it starts</div>
+    <h2>Tell us how your business runs. We build the desk around it.</h2>
+    <div class="steps">
+      <div class="step"><b>01</b><h3>We listen</h3><p>Which departments you bid for, who does what in your office, where the money gets stuck.</p></div>
+      <div class="step"><b>02</b><h3>We set up your desk</h3><p>Your documents, your past works, your rates and your staff's WhatsApp numbers go in once.</p></div>
+      <div class="step"><b>03</b><h3>Officers start reporting</h3><p>Start with the officers you need most. Add more when they prove useful.</p></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="kicker">What it costs</div>
+    <h2>A small setup fee, then a monthly fee. Pay only for the officers you use.</h2>
+    <div class="price">
+      <div class="pcard"><span class="tag">One time</span><h3>Setup</h3><p>We load your firm profile, documents and past works, and connect your team on WhatsApp.</p></div>
+      <div class="pcard hot"><span class="tag y">Monthly</span><h3>Your desk</h3><p>One fee covers the officers you choose, the AI usage and support. No per-message charges to track.</p></div>
+      <div class="pcard"><span class="tag">Always</span><h3>You stay in control</h3><p>Officers prepare and remind. You approve every bid price, and you submit with your own digital signature.</p></div>
+    </div>
+    <div style="margin-top:44px"><button class="btn" onclick="enter()">Open the live demo →</button></div>
+  </section>
+
+  <footer><span>Contractor Desk, a VV Automate product.</span><span>Demonstration build. All tenders, figures and names shown inside are sample data.</span></footer>
+</div>
+
+<!-- ======================= APP ======================= -->
+<div id="app">
+  <aside>
+    <div class="brand"><div class="mark">CD</div><div>Contractor Desk<small>YOUR FIRM · DEMO</small></div></div>
+    <button class="navi" data-v="home"><i>◉</i>Command Centre</button>
+    <div class="sep">Tenders</div>
+    <button class="navi" data-v="scout"><i>🔭</i>Tender Scout<span class="dot"></span></button>
+    <button class="navi" data-v="analyst"><i>📑</i>Tender Analyst<span class="dot"></span></button>
+    <button class="navi" data-v="estimator"><i>🧮</i>Estimator<span class="dot"></span></button>
+    <button class="navi" data-v="vault"><i>🗂️</i>Document Clerk<span class="dot"></span></button>
+    <div class="sep">Money</div>
+    <button class="navi" data-v="billing"><i>💰</i>Billing &amp; Collections<span class="dot"></span></button>
+    <button class="navi" data-v="accounts"><i>📊</i>Accounts Officer<span class="dot"></span></button>
+    <div class="sep">Site &amp; Office</div>
+    <button class="navi" data-v="site"><i>🏗️</i>Site Reporter<span class="dot"></span></button>
+    <button class="navi" data-v="letters"><i>✍️</i>Correspondence<span class="dot"></span></button>
+    <button class="navi" data-v="compliance"><i>🛡️</i>Compliance<span class="dot"></span></button>
+    <button class="back" onclick="leave()">← Back to overview</button>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="demo-flag">DEMO · SAMPLE DATA</div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const AGENTS=[
+ {v:'scout',ic:'🔭',n:'Tender Scout',d:'Checks CPPP, GeM, CPWD and state PWD every day and sends only the tenders that fit your class, region and value.',s:'3 new matches today'},
+ {v:'analyst',ic:'📑',n:'Tender Analyst',d:'Reads the full tender document in minutes. Eligibility, EMD, dates, risky clauses and a bid / no-bid score.',s:'1 tender analysed'},
+ {v:'estimator',ic:'🧮',n:'Estimator',d:'Rate analysis against the schedule of rates and a study of past award results, so you see a sensible bid range.',s:'Range ready for 1 bid'},
+ {v:'vault',ic:'🗂️',n:'Document Clerk',d:'Keeps every certificate ready, builds the bid pack for each tender and warns you before anything expires.',s:'2 papers expiring'},
+ {v:'billing',ic:'💰',n:'Billing & Collections',d:'Tracks RA bills at each division, security deposits, EMD refunds and bank guarantees. Reminds until money moves.',s:'₹38.6 L being chased'},
+ {v:'accounts',ic:'📊',n:'Accounts Officer',d:'GST matching, TDS tracking and supplier payments, prepared neatly for your Chartered Accountant.',s:'Month books 92% matched'},
+ {v:'site',ic:'🏗️',n:'Site Reporter',d:'Supervisors send a voice note in Bengali or Hindi. It becomes the daily progress report and the hindrance register.',s:'4 sites reported today'},
+ {v:'letters',ic:'✍️',n:'Correspondence Officer',d:'Drafts extension-of-time requests, hindrance letters and replies to the Engineer-in-Charge in proper official language.',s:'1 draft awaiting you'},
+ {v:'compliance',ic:'🛡️',n:'Compliance Officer',d:'EPF, ESIC, labour licence, labour cess, insurance and guarantee dates on one calendar, with reminders.',s:'All dues on track'},
+];
+
+/* ----- landing ----- */
+$('#spin').innerHTML=AGENTS.map((a,i)=>{const t=i/AGENTS.length*2*Math.PI,r=i%2?34:42;return `<div class="node" style="transform:translate(${Math.cos(t)*r*5.6}px,${Math.sin(t)*r*5.6}px)"><div><span class="dot" style="animation-delay:${i*.3}s"></span>${a.ic} ${a.n}</div></div>`}).join('');
+function fitOrbit(){const w=$('#orbit').offsetWidth/560;$$('#spin .node').forEach((n,i)=>{const t=i/AGENTS.length*2*Math.PI,r=(i%2?34:42)*5.6*w;n.style.transform=`translate(${Math.cos(t)*r}px,${Math.sin(t)*r}px)`;n.firstChild.style.fontSize=Math.max(10,13*w)+'px'})}
+addEventListener('resize',fitOrbit);fitOrbit();
+$('#agentCards').innerHTML=`<div class="agent chief"><div class="ic">★</div><h3>Chief of Staff</h3><p>Watches all nine officers, catches what is urgent and gives you one clear brief every morning. Ask it anything on WhatsApp, in Bengali, Hindi or English.</p></div>`+
+ AGENTS.map(a=>`<div class="agent"><div class="ic">${a.ic}</div><h3>${a.n}</h3><p>${a.d}</p></div>`).join('');
+
+/* ----- router ----- */
+let timers=[];
+const later=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t);return t};
+const every=(f,ms)=>{const t=setInterval(f,ms);timers.push(t);return t};
+function enter(v='home'){document.body.classList.add('inapp');scrollTo(0,0);go(v)}
+function leave(){document.body.classList.remove('inapp');timers.forEach(clearTimeout);scrollTo(0,0);later(fitOrbit,50)}
+function go(v){timers.forEach(t=>{clearTimeout(t);clearInterval(t)});timers=[];
+ $$('.navi').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ const m=$('#main');m.innerHTML=VIEWS[v]();m.scrollTop=0;(INIT[v]||(()=>{}))();
+ later(()=>$$('.bar i',m).forEach(b=>b.style.width=b.dataset.w+'%'),120)}
+$$('.navi').forEach(b=>b.onclick=()=>go(b.dataset.v));
+function type(el,html,speed=14,done){let i=0;el.classList.add('caret');(function step(){if(i>=html.length){el.classList.remove('caret');done&&done();return}
+  if(html[i]==='<'){i=html.indexOf('>',i)+1}else i++;el.innerHTML=html.slice(0,i);later(step,speed)})()}
+const head=(t,p,extra='')=>`<div class="top"><div><h2>${t}</h2><p>${p}</p></div><div>${extra}</div></div>`;
+
+/* ----- data (sample) ----- */
+const TENDERS=[
+ {id:'NIT 31/EE/KCD-II/2026-27',t:'Construction of 48 Nos. Type-III quarters (G+3) incl. water supply, sanitary and electrical works',dep:'CPWD',val:'₹8.42 Cr',due:'9 days',m:91},
+ {id:'NIT 14/SE/PWD-BLDG/2026-27',t:'Construction of 3-storied administrative building with boundary wall',dep:'State PWD',val:'₹5.76 Cr',due:'13 days',m:86},
+ {id:'NIT 07/EE/RD-N/2026-27',t:'Widening and strengthening of 6.4 km district road with CC drain',dep:'State PWD (Roads)',val:'₹11.20 Cr',due:'17 days',m:74},
+ {id:'GEM/2026/B/5527xxx',t:'Renovation of office block and toilet blocks, central government office',dep:'GeM',val:'₹1.38 Cr',due:'6 days',m:68},
+ {id:'NIT 22/EE/KCD-IV/2026-27',t:'Vertical extension of hostel block (2 floors) with lift',dep:'CPWD',val:'₹4.15 Cr',due:'21 days',m:63},
+];
+const FEED=[
+ ['Tender Scout','found a new CPWD building tender worth ₹8.42 Cr that fits your class'],
+ ['Billing & Collections','sent a reminder for RA Bill 4, pending 47 days at Division II'],
+ ['Site Reporter','turned a voice note from Site 3 into today\'s progress report'],
+ ['Document Clerk','noticed your solvency certificate is short for one tender'],
+ ['Tender Analyst','finished reading 214 pages and marked 3 risky clauses'],
+ ['Compliance Officer','confirmed this month\'s EPF and ESIC challans are filed'],
+ ['Correspondence Officer','drafted an extension-of-time letter for your approval'],
+ ['Accounts Officer','matched 92% of purchase bills with GSTR-2B'],
+ ['Estimator','compared your rates with 11 past award results'],
+ ['Chief of Staff','added the Friday bid deadline to your morning brief'],
+];
+
+/* ----- views ----- */
+const VIEWS={
+home:()=>head('Good morning.','Here is what your desk did while you were away.','<span class="tag ok">● 9 officers on duty</span>')+`
+ <div class="grid g4">
+  <div class="card kpi y"><b>3</b><span>new tenders that fit you</span></div>
+  <div class="card kpi warn"><b>1</b><span>bid closing this week</span></div>
+  <div class="card kpi bad"><b>₹38.6 L</b><span>your money stuck with departments</span></div>
+  <div class="card kpi"><b>2</b><span>papers expiring in 30 days</span></div>
+ </div>
+ <div class="grid g2" style="margin-top:16px">
+  <div class="grid">
+   <div class="card brief"><div class="who"><div class="av">★</div><div><b>Chief of Staff</b><div class="mono" style="font-size:11px;color:var(--mute)">MORNING BRIEF · 7:00 AM</div></div></div><p id="brief"></p></div>
+   <div class="card"><h4>Officers on duty</h4><div class="status">${AGENTS.map((a,i)=>`<div class="st" onclick="go('${a.v}')"><b><span class="dot" style="animation-delay:${i*.25}s"></span>${a.n}</b><span>${a.s}</span></div>`).join('')}</div></div>
+  </div>
+  <div class="grid">
+   <div class="card"><h4>Live activity</h4><div class="feed" id="feed"></div></div>
+   <div class="card"><h4>On your phone</h4><div class="phone"><div class="hd"><div class="av" style="width:34px;height:34px">★</div><div>Chief of Staff<small>online</small></div></div><div class="bd" id="wa"></div></div></div>
+  </div>
+ </div>`,
+
+scout:()=>head('Tender Scout','Checked 5 portals this morning. These fit your class, region and value range.','<span class="tag y">Last check 6:40 AM</span>')+`
+ <div class="card"><table><tr><th>Tender</th><th>Department</th><th class="r">Value</th><th>Closes in</th><th style="width:150px">Fit</th><th></th></tr>
+ ${TENDERS.map(t=>`<tr><td><b>${t.t}</b><small>${t.id}</small></td><td>${t.dep}</td><td class="r"><b>${t.val}</b></td><td>${t.due}</td><td><div style="display:flex;gap:10px;align-items:center"><div class="bar" style="flex:1"><i data-w="${t.m}"></i></div><span class="mono">${t.m}%</span></div></td><td class="r"><button class="btn sm" onclick="go('analyst');later(runAnalysis,400)">Analyse</button></td></tr>`).join('')}
+ </table></div>
+ <p class="note">Sample tenders for demonstration. In live use these come from the portals' own alerts or a licensed tender feed.</p>`,
+
+analyst:()=>head('Tender Analyst','Give it the tender document. It reads every page so you don\'t have to.')+`
+ <div id="an">
+  <div class="card"><div class="drop"><div class="big">📄</div><b style="font-size:19px">Drop a tender PDF here</b><p style="color:var(--mute);margin:6px 0 20px">or try it on the sample CPWD tender (214 pages)</p><button class="btn" onclick="runAnalysis()">Analyse sample tender →</button></div></div>
+ </div>`,
+
+estimator:()=>head('Estimator','Your rates, the schedule of rates, and what past tenders were actually awarded at.','<span class="tag y">48 Type-III quarters</span>')+`
+ <div class="grid g2">
+  <div class="card"><h4>Rate analysis · major items</h4><table><tr><th>Item</th><th class="r">Qty</th><th class="r">Schedule rate</th><th class="r">Your cost</th><th class="r">Margin</th></tr>
+   ${[['RCC M-25 in slabs, beams, columns','1,840 cum','₹8,950','₹8,120','9.3%'],['TMT reinforcement Fe-500D','212 MT','₹92,400','₹86,900','6.0%'],['Brick work in CM 1:6','2,960 cum','₹7,380','₹6,540','11.4%'],['Vitrified tile flooring','5,420 sqm','₹1,610','₹1,455','9.6%'],['12 mm cement plaster 1:6','18,300 sqm','₹318','₹276','13.2%']].map(r=>`<tr><td>${r[0]}</td><td class="r mono">${r[1]}</td><td class="r mono">${r[2]}</td><td class="r mono">${r[3]}</td><td class="r"><span class="tag ok">${r[4]}</span></td></tr>`).join('')}
+  </table></div>
+  <div class="card"><h4>Where to bid</h4>
+   <p style="color:var(--mute);font-size:14.5px">11 similar building tenders in this circle over 3 years were awarded between 6.8% and 12.4% below estimate.</p>
+   <div class="range"><div class="track"></div><div class="band" id="band"></div><div class="pin" style="left:8%">−15%</div><div class="pin" style="left:50%">−7.5%</div><div class="pin" style="left:92%">Estimate</div></div>
+   <div class="fact" style="margin-top:22px"><span>Suggested range</span><b style="color:var(--y)">7.5% to 9.5% below estimate</b></div>
+   <div class="fact" style="margin-top:10px"><span>Your margin at 8.5% below</span><b>about 6.2%</b></div>
+   <p class="note">The final price is always your decision.</p>
+  </div>
+ </div><p class="note">Illustrative figures for demonstration.</p>`,
+
+vault:()=>head('Document Clerk','Every paper a tender asks for, ready and in date.','<button class="btn sm" onclick="this.textContent=\'✓ Bid pack built · 23 documents\'">Build bid pack for CPWD tender</button>')+`
+ <div class="card"><table><tr><th>Document</th><th>Valid till</th><th>Status</th></tr>
+ ${[['PAN and GST registration','No expiry','ok','Ready'],['CPWD enlistment, Class I (Building)','March 2029','ok','Ready'],['Experience certificates (7 works)','No expiry','ok','Ready'],['CA-certified turnover, last 5 years','FY 2025-26','ok','Ready'],['Income tax returns, last 3 years','AY 2026-27','ok','Ready'],['EPF and ESIC registration','No expiry','ok','Ready'],['Bank solvency certificate (₹3.00 Cr)','4 Dec 2026','warn','Expires in 21 days'],['Labour licence','28 Nov 2026','warn','Expires in 15 days'],['Electrical contractor licence','June 2027','ok','Ready']].map(r=>`<tr><td><b>${r[0]}</b></td><td class="mono">${r[1]}</td><td><span class="tag ${r[2]}">${r[3]}</span></td></tr>`).join('')}
+ </table></div>`,
+
+billing:()=>head('Billing & Collections','Work you have finished but have not been paid for.','<span class="tag bad">₹38.6 L stuck</span>')+`
+ <div class="grid g3">
+  <div class="card kpi bad"><b>₹21.4 L</b><span>RA bills awaiting payment</span></div>
+  <div class="card kpi warn"><b>₹9.8 L</b><span>security deposits due for release</span></div>
+  <div class="card kpi warn"><b>₹7.4 L</b><span>EMD refunds pending</span></div>
+ </div>
+ <div class="card" style="margin-top:16px"><table><tr><th>Item</th><th>With</th><th class="r">Amount</th><th>Waiting</th><th style="width:160px"></th><th>Next action</th></tr>
+ ${[['RA Bill 4, staff quarters','Division II','₹12.6 L','47 days',94,'Reminder sent today'],['RA Bill 2, office building','Division IV','₹8.8 L','22 days',44,'Follow up on Monday'],['Security deposit, school block','Division I','₹9.8 L','Defect period over 18 days ago',36,'Release request drafted'],['EMD refund, 3 lost tenders','Various','₹7.4 L','31 days',62,'Letters ready to sign']].map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="r"><b>${r[2]}</b></td><td>${r[3]}</td><td><div class="bar"><i data-w="${r[4]}" style="background:var(--bad)"></i></div></td><td><span class="tag y">${r[5]}</span></td></tr>`).join('')}
+ </table></div>`,
+
+accounts:()=>head('Accounts Officer','Books kept tidy every day and handed to your Chartered Accountant ready to file.','<span class="tag">Prepared for your CA</span>')+`
+ <div class="grid g3">
+  <div class="card kpi y"><b>92%</b><span>purchase bills matched with GSTR-2B</span></div>
+  <div class="card kpi warn"><b>₹1.84 L</b><span>input credit at risk, 6 suppliers not filed</span></div>
+  <div class="card kpi"><b>₹4.12 L</b><span>TDS deducted by departments this year</span></div>
+ </div>
+ <div class="grid g2e" style="margin-top:16px">
+  <div class="card"><h4>Suppliers to chase</h4><table><tr><th>Supplier</th><th class="r">Bill value</th><th class="r">GST at risk</th></tr>
+   ${[['Cement dealer A','₹3.20 L','₹89,600'],['Steel trader B','₹2.10 L','₹37,800'],['Sanitary ware C','₹1.46 L','₹26,280'],['Hardware store D','₹0.92 L','₹16,560']].map(r=>`<tr><td>${r[0]}</td><td class="r mono">${r[1]}</td><td class="r mono" style="color:var(--warn)">${r[2]}</td></tr>`).join('')}</table></div>
+  <div class="card"><h4>TDS certificates</h4><table><tr><th>Deducted by</th><th class="r">Amount</th><th>Form 16A</th></tr>
+   ${[['Division II','₹1.72 L','ok','Received'],['Division IV','₹1.31 L','ok','Received'],['Division I','₹1.09 L','warn','Not yet issued']].map(r=>`<tr><td>${r[0]}</td><td class="r mono">${r[1]}</td><td><span class="tag ${r[2]}">${r[3]}</span></td></tr>`).join('')}</table></div>
+ </div><p class="note">The officer prepares and reconciles. Your Chartered Accountant reviews, signs and files.</p>`,
+
+site:()=>head('Site Reporter','Your supervisor speaks. The report writes itself.')+`
+ <div class="grid g2e">
+  <div class="card"><h4>From Site 3 supervisor · WhatsApp · 6:12 PM</h4>
+   <div class="voice"><span style="font-size:22px">▶</span><div class="wave">${Array.from({length:34},(_,i)=>`<i style="height:${8+Math.abs(Math.sin(i*1.7))*20}px;animation-delay:${i*.05}s"></i>`).join('')}</div><span class="mono" style="font-size:12px">0:38</span></div>
+   <p class="bn" style="margin-top:18px;font-size:16.5px;color:var(--mute);line-height:1.7">"আজ তৃতীয় তলার ছাদ ঢালাই শেষ হয়েছে। বিয়াল্লিশ জন লেবার ছিল। সিমেন্ট একশো আশি ব্যাগ লেগেছে। দুপুরে দু'ঘণ্টা বৃষ্টিতে কাজ বন্ধ ছিল। কাল রড আসার কথা ছিল, এখনও আসেনি।"</p>
+   <div style="margin-top:22px"><button class="btn" onclick="makeDPR(this)">Turn into daily report →</button></div>
+  </div>
+  <div class="card" id="dpr"><h4>Daily progress report</h4><p style="color:var(--dim)">The report will appear here.</p></div>
+ </div>`,
+
+letters:()=>head('Correspondence Officer','Official letters drafted from your site records. You read, correct and sign.')+`
+ <div class="pick" id="pick"><button class="on" data-l="eot">Extension of time</button><button data-l="hind">Hindrance intimation</button><button data-l="sd">Security deposit release</button></div>
+ <div class="letter" id="letter"></div>
+ <p class="note">Drafts use the dates and hindrances your Site Reporter has already recorded.</p>`,
+
+compliance:()=>head('Compliance Officer','Every statutory date on one page, with reminders before each one.','<span class="tag ok">Nothing overdue</span>')+`
+ <div class="card"><table><tr><th>What</th><th>Due</th><th>Status</th></tr>
+ ${[['EPF challan, October wages','15 Nov','ok','Filed 11 Nov'],['ESIC challan, October wages','15 Nov','ok','Filed 11 Nov'],['GSTR-1','11 Nov','ok','Filed'],['GSTR-3B','20 Nov','warn','Due in 7 days'],['Labour licence renewal','28 Nov','warn','Renewal form drafted'],['Bank guarantee, office building (₹28.8 L)','25 Nov','warn','Extension request ready'],['Contractor\'s all-risk insurance, staff quarters','14 Feb 2027','ok','Valid'],['Labour welfare cess, Q3','31 Dec','ok','Scheduled']].map(r=>`<tr><td><b>${r[0]}</b></td><td class="mono">${r[1]}</td><td><span class="tag ${r[2]}">${r[3]}</span></td></tr>`).join('')}
+ </table></div>`
+};
+
+/* ----- behaviours ----- */
+const INIT={
+home(){
+ type($('#brief'),`Three new tenders fit you today. The best is a <b>CPWD quarters job worth ₹8.42 Cr</b>, and I recommend bidding. One bid closes <b>Friday</b>. You have <b>₹38.6 lakh</b> stuck in bills and deposits, and RA Bill 4 has now waited 47 days, so I have sent a reminder. Your <b>solvency certificate</b> must be renewed before the CPWD bid. One letter is waiting for your signature.`,16);
+ let k=0;const f=$('#feed');const add=()=>{const e=FEED[k++%FEED.length];const d=new Date(Date.now()-((k%7)*60000));const el=document.createElement('div');el.className='fi';el.innerHTML=`<time>${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</time><div><b>${e[0]}</b> ${e[1]}</div>`;f.prepend(el);if(f.children.length>7)f.lastChild.remove()};
+ for(let i=0;i<5;i++)add();every(add,2600);
+ const wa=$('#wa');const M=[['','Good morning. <b>3 new tenders</b> fit you today. Best one: CPWD, 48 quarters, ₹8.42 Cr, closes in 9 days.'],['me','Eligible?'],['','Yes on turnover and past works. Your solvency certificate is ₹37 lakh short. A fresh one from the bank fixes it.'],['me','RA bill 4 er ki holo?'],['','Still pending at Division II, 47 days. I sent a reminder this morning and will follow up on Monday.']];
+ M.forEach((m,i)=>later(()=>{const e=document.createElement('div');e.className='msg '+m[0];e.innerHTML=m[1];wa.append(e)},1200+i*1900));
+},
+estimator(){later(()=>{const b=$('#band');b.style.left='33%';b.style.width='20%'},300)},
+letters(){const show=k=>type($('#letter'),LETTERS[k],4);show('eot');$$('#pick button').forEach(b=>b.onclick=()=>{timers.forEach(clearTimeout);$$('#pick button').forEach(x=>x.classList.toggle('on',x===b));show(b.dataset.l)})}
+};
+
+function runAnalysis(){
+ const steps=['Reading 214 pages','Extracting eligibility criteria','Finding dates, EMD and guarantees','Checking 61 contract clauses for risk','Comparing with your firm profile','Scoring bid / no-bid'];
+ $('#an').innerHTML=`<div class="card"><h4>NIT 31/EE/KCD-II/2026-27 · 214 pages</h4><div class="prog">${steps.map(s=>`<div class="pl"><span class="sp"></span>${s}</div>`).join('')}</div><div class="scan"><i id="scan"></i></div></div>`;
+ const pl=$$('.pl');let i=0;const sc=$('#scan');
+ (function nx(){if(i)pl[i-1].className='pl done';sc.style.transition='width .7s';sc.style.width=(i/steps.length*100)+'%';if(i<steps.length){pl[i].className='pl run';i++;later(nx,750)}else later(showResult,450)})();
+}
+function showResult(){
+ $('#an').innerHTML=`
+ <div class="grid g2 reveal">
+  <div class="card"><div class="score">
+    <svg class="ringsvg" viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" id="fg" cx="75" cy="75" r="65"/><text x="75" y="84" text-anchor="middle" fill="#FFFAF0" font-size="40" font-weight="700" font-family="Space Grotesk" id="num">0</text></svg>
+    <div><span class="tag y">Recommendation</span><div class="verdict">Bid, after one fix</div><p style="color:var(--mute);margin-top:6px">You meet turnover and experience. Renew the solvency certificate for a higher amount before submission.</p></div>
+  </div></div>
+  <div class="card"><h4>The work</h4><b style="font-size:17px;line-height:1.35;display:block">Construction of 48 Nos. Type-III quarters (G+3) including water supply, sanitary and electrical works</b><p class="mono" style="color:var(--dim);font-size:12px;margin-top:8px">CPWD · Percentage rate · Two-bid system</p></div>
+ </div>
+ <div class="facts reveal" style="margin-top:16px;animation-delay:.15s">
+  ${[['Estimated cost','₹8.42 Cr'],['EMD (2%)','₹16.84 L'],['Completion','18 months'],['Bid closes','22 Nov, 3:00 PM'],['Performance guarantee (5%)','₹42.10 L'],['Security deposit (2.5%)','₹21.05 L'],['Pre-bid meeting','17 Nov, 11:00 AM'],['Defect liability','12 months']].map(f=>`<div class="fact"><span>${f[0]}</span><b>${f[1]}</b></div>`).join('')}
+ </div>
+ <div class="grid g2e reveal" style="margin-top:16px;animation-delay:.3s">
+  <div class="card"><h4>Are you eligible?</h4>
+   ${[['ok','Similar works','Need 2 works of ₹5.05 Cr or more in 7 years. You have 2 (₹5.60 Cr and ₹5.20 Cr).'],['ok','Average annual turnover','Need ₹4.21 Cr. Yours is ₹6.10 Cr.'],['warn','Bank solvency','Need ₹3.37 Cr. Your certificate shows ₹3.00 Cr and expires in 21 days. Ask the bank for a fresh one.'],['ok','Enlistment class','Class I (Building) covers this value.'],['ok','EPF, ESIC and GST','All registrations found in your vault.'],['ok','No loss in recent years','Profit shown in 3 of the last 5 years as required.']].map(c=>`<div class="chk ${c[0]}"><i>${c[0]==='ok'?'✓':'!'}</i><div><b>${c[1]}</b><small>${c[2]}</small></div></div>`).join('')}
+  </div>
+  <div class="card"><h4>Clauses to watch</h4>
+   ${[['Delay compensation','1.5% per month of delay, up to 10% of the tendered value. Five milestones, with money withheld if one is missed. Page 47.'],['Price escalation','Applies to cement and steel only. Labour and other materials are at your risk for 18 months. Page 52.'],['Site handover','Part of the site is handed over in phases. Record every delay as a hindrance from day one. Page 31.']].map(c=>`<div class="chk warn"><i>!</i><div><b>${c[0]}</b><small>${c[1]}</small></div></div>`).join('')}
+   <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn sm" onclick="go('estimator')">See bid range →</button><button class="btn sm ghost" onclick="go('vault')">Build bid pack</button></div>
+  </div>
+ </div><p class="note">Sample tender and sample firm profile, for demonstration.</p>`;
+ later(()=>{$('#fg').style.strokeDashoffset=408*(1-.82)},150);
+ let n=0;const iv=every(()=>{n+=2;$('#num')&&($('#num').textContent=Math.min(n,82));if(n>=82)clearInterval(iv)},30);
+}
+function makeDPR(btn){btn.textContent='Listening…';btn.disabled=true;later(()=>{btn.textContent='✓ Report filed';
+ $('#dpr').innerHTML=`<h4>Daily progress report · Site 3 · 13 Nov 2026</h4><div class="reveal">
+ <div class="facts" style="grid-template-columns:1fr 1fr 1fr"><div class="fact"><span>Labour</span><b>42</b></div><div class="fact"><span>Cement used</span><b>180 bags</b></div><div class="fact"><span>Time lost</span><b>2 hours</b></div></div>
+ <div class="chk ok" style="margin-top:14px"><i>✓</i><div><b>Work done</b><small>Third floor roof slab casting completed.</small></div></div>
+ <div class="chk warn"><i>!</i><div><b>Hindrance recorded</b><small>Rain stopped work for 2 hours in the afternoon. Added to the hindrance register for future extension-of-time claims.</small></div></div>
+ <div class="chk warn"><i>!</i><div><b>Material alert</b><small>Reinforcement steel expected today has not arrived. Supplier reminder drafted.</small></div></div>
+ <div class="chk ok"><i>✓</i><div><b>Sent to</b><small>You, the project engineer and the Chief of Staff's evening summary.</small></div></div></div>`},1500)}
+
+const LETTERS={
+eot:`To
+The Executive Engineer
+Division II
+
+Sub: Request for extension of time under Clause 5 of the agreement
+Ref: Agreement No. 12/EE/KCD-II/2025-26, Construction of staff quarters
+
+Sir,
+
+With reference to the above work, we submit that the progress has been affected by the following hindrances, each of which is recorded in the hindrance register maintained at site:
+
+1. Part of the site (Block C) was handed over 34 days after the stipulated date of start.
+2. Work was suspended for 11 days due to heavy rainfall during the monsoon.
+3. Structural drawings for the staircase core were issued 19 days after our request.
+
+The total period of hindrance is 64 days, of which 9 days overlap. The net delay not attributable to us is 55 days.
+
+We therefore request that extension of time of 55 days be granted without levy of compensation. Copies of the relevant hindrance register pages are enclosed.
+
+Yours faithfully,
+
+Authorised Signatory`,
+hind:`To
+The Assistant Engineer
+Sub-Division 3
+
+Sub: Intimation of hindrance at site
+Ref: Agreement No. 12/EE/KCD-II/2025-26
+
+Sir,
+
+This is to bring to your kind notice that work at Site 3 was stopped for 2 hours on 13 November 2026 due to rainfall during roof slab casting of the third floor.
+
+Further, the reinforcement steel scheduled for delivery on this date has not been received, which may affect the column work of the fourth floor planned from 15 November.
+
+We request that this hindrance be entered in the hindrance register and countersigned.
+
+Yours faithfully,
+
+Authorised Signatory`,
+sd:`To
+The Executive Engineer
+Division I
+
+Sub: Request for release of security deposit
+Ref: Agreement No. 08/EE/KCD-I/2024-25, Construction of school block
+
+Sir,
+
+The above work was completed on 26 October 2025 and the completion certificate has been issued. The defect liability period of twelve months ended on 26 October 2026, and no defect has been notified to us during this period.
+
+We request that the security deposit of Rs. 9,80,000 held against this work be released at the earliest.
+
+Yours faithfully,
+
+Authorised Signatory`};
+</script>
+</body>
+</html>
