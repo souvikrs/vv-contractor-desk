@@ -633,6 +633,7 @@ function skyline(el,seed){let s=seed;const R=()=>(s=(s*9301+49297)%233280)/23328
   o+=g+'</g>';x+=w+6+R()*34;i++}
  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice">${o}<path d="M0 ${H-1}h${W}" stroke="#FFC21A" stroke-width="2" opacity=".5"/></svg>`}
 skyline($('#sky'),7);skyline($('#sky2'),23);
+if(location.hash.startsWith('#v='))enter(location.hash.slice(3));
 document.addEventListener('mousemove',e=>{const c=e.target.closest&&e.target.closest('.agent,.pcard,.tcard,.card');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 $$('.band .kicker,.band h2,.band .sub,.agent,.step,.pcard,.tcard,.strip div').forEach(el=>{el.classList.add('rv');el.style.transitionDelay=([...el.parentNode.children].indexOf(el)%6*70)+'ms';io.observe(el)});
