@@ -5,4 +5,4 @@ Nine AI officers plus a Chief of Staff. Everything shown is sample data; no back
 
 - Open `index.html` in a browser. No build step.
 - Built 13 Nov 2026 for a first client conversation. Parked until the client gives his full requirements.
-- Local only. Not pushed, not deployed.
+- Hosted with GitHub Pages from the public repo souvikrs/vv-contractor-desk: https://souvikghoshrs.com/vv-contractor-desk/
